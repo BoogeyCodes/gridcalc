@@ -44,8 +44,8 @@ replacement. It is a library: no UI, no file formats, just the engine.
 - **References and ranges**: `A1`, `B2`, `A1:C3`. Column letters go past `Z` (`AA`, `AB`, …).
 - **Operators**: `+ - * / ^`, comparisons (`= <> < <= > >=`), and `&` for text concatenation, with
   correct precedence and right-associative `^`.
-- **Functions**: `SUM`, `AVERAGE`, `MIN`, `MAX`, `PRODUCT`, `COUNT`, `IF`, `AND`, `OR`, `NOT`, `ABS`,
-  `SQRT`, `INT`, `ROUND`, `MOD`, `CONCAT`, `LEN`, `UPPER`, `LOWER`, `TRIM`.
+- **Functions**: `SUM`, `AVERAGE`, `MEDIAN`, `MIN`, `MAX`, `PRODUCT`, `COUNT`, `COUNTA`, `IF`, `AND`,
+  `OR`, `NOT`, `ABS`, `SQRT`, `INT`, `ROUND`, `POWER`, `MOD`, `CONCAT`, `LEN`, `UPPER`, `LOWER`, `TRIM`.
 - **Error propagation**: an error in a precedent flows through to everything that depends on it.
 
 ## How it works

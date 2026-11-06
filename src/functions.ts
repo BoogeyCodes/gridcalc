@@ -186,4 +186,36 @@ export const FUNCTIONS: Record<string, FunctionImpl> = {
     const v = scalar(args[0])
     return isError(v) ? v : toText(v).trim()
   },
+  COUNTA: (args) => {
+    // Count non-empty values (numbers, non-blank text, booleans), like a spreadsheet COUNTA.
+    let count = 0
+    for (const arg of args) {
+      for (const value of flatten(arg)) {
+        if (typeof value === 'string') {
+          if (value.trim() !== '') count++
+        } else if (value !== null && value !== undefined) {
+          count++
+        }
+      }
+    }
+    return count
+  },
+  MEDIAN: (args) => {
+    const nums = numbers(args)
+    if (isError(nums)) return nums
+    if (!nums.length) return new CellError('#VALUE!', 'MEDIAN of no numbers')
+    const sorted = [...nums].sort((a, b) => a - b)
+    const mid = Math.floor(sorted.length / 2)
+    return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid]
+  },
+  POWER: (args) => {
+    const bad = requireArgs(args, 2)
+    if (bad) return bad
+    const base = toNumber(scalar(args[0]))
+    const exponent = toNumber(scalar(args[1]))
+    if (isError(base)) return base
+    if (isError(exponent)) return exponent
+    const result = base ** exponent
+    return Number.isFinite(result) ? result : new CellError('#VALUE!', 'POWER result is not finite')
+  },
 }

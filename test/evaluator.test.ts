@@ -46,6 +46,15 @@ describe('formula evaluation', () => {
     expect(evalFormula('=CONCAT("a", "b", "c")')).toBe('abc')
     expect(evalFormula('=LEN("hello")')).toBe(5)
     expect(evalFormula('=UPPER("abc")')).toBe('ABC')
+    expect(evalFormula('=POWER(2, 10)')).toBe(1024)
+    expect(evalFormula('=MEDIAN(1, 3, 2)')).toBe(2)
+    expect(evalFormula('=MEDIAN(1, 2, 3, 4)')).toBe(2.5)
+  })
+
+  it('counts non-empty values with COUNTA', () => {
+    const grid = new Grid().setMany({ A1: 10, A2: '', A3: 'x', A4: 0 })
+    grid.set('B1', '=COUNTA(A1:A4)')
+    expect(grid.get('B1')).toBe(3) // 10, "x", 0 — the blank A2 is skipped
   })
 
   it('propagates errors through operators and functions', () => {
